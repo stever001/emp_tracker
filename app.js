@@ -120,10 +120,86 @@ function addDepartment() {
     }
     
 
-function addEmployee() {
-    // This requires fetching roles and possibly managers first. Implement accordingly.
-}
-function updateEmployeeRole() {
-    // This requires fetching the list of employees and roles first. Implement accordingly.
-}
+    function addEmployee() {
+        connection.query('SELECT * FROM role', (err, roles) => {
+            if (err) throw err;
+    
+            connection.query('SELECT * FROM employee', (err, employees) => {
+                if (err) throw err;
+    
+                inquirer.prompt([
+                    {
+                        name: 'firstName',
+                        type: 'input',
+                        message: 'What is the employee\'s first name?'
+                    },
+                    {
+                        name: 'lastName',
+                        type: 'input',
+                        message: 'What is the employee\'s last name?'
+                    },
+                    {
+                        name: 'role',
+                        type: 'list',
+                        choices: roles.map(role => role.title),
+                        message: 'What is the employee\'s role?'
+                    },
+                    {
+                        name: 'manager',
+                        type: 'list',
+                        choices: ['None'].concat(employees.map(emp => emp.first_name + ' ' + emp.last_name)),
+                        message: 'Who is the employee\'s manager?'
+                    }
+                ]).then(answers => {
+                    let selectedRole = roles.find(role => role.title === answers.role);
+                    let selectedManager = employees.find(emp => emp.first_name + ' ' + emp.last_name === answers.manager);
+                    connection.query('INSERT INTO employee SET ?', {
+                        first_name: answers.firstName,
+                        last_name: answers.lastName,
+                        role_id: selectedRole.id,
+                        manager_id: selectedManager ? selectedManager.id : null
+                    }, (err, res) => {
+                        if (err) throw err;
+                        console.log(`Employee added: ${answers.firstName} ${answers.lastName}`);
+                        start();
+                    });
+                });
+            });
+        });
+    }
+    
+    function updateEmployeeRole() {
+        connection.query('SELECT * FROM employee', (err, employees) => {
+            if (err) throw err;
+    
+            connection.query('SELECT * FROM role', (err, roles) => {
+                if (err) throw err;
+    
+                inquirer.prompt([
+                    {
+                        name: 'employee',
+                        type: 'list',
+                        choices: employees.map(emp => emp.first_name + ' ' + emp.last_name),
+                        message: 'Which employee\'s role do you want to update?'
+                    },
+                    {
+                        name: 'role',
+                        type: 'list',
+                        choices: roles.map(role => role.title),
+                        message: 'What is the new role?'
+                    }
+                ]).then(answers => {
+                    let selectedEmployee = employees.find(emp => emp.first_name + ' ' + emp.last_name === answers.employee);
+                    let selectedRole = roles.find(role => role.title === answers.role);
+    
+                    connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [selectedRole.id, selectedEmployee.id], (err, res) => {
+                        if (err) throw err;
+                        console.log(`Updated employee's role: ${answers.employee}`);
+                        start();
+                    });
+                });
+            });
+        });
+    }
+    
 start();
