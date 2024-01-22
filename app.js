@@ -82,9 +82,43 @@ function addDepartment() {
     });
 }
 
-function addRole() {
-    // This requires fetching departments first. Implement accordingly.
-}
+    function addRole() {
+        connection.query('SELECT * FROM department', (err, departments) => {
+            if (err) throw err;
+    
+            inquirer.prompt([
+                {
+                    name: 'title',
+                    type: 'input',
+                    message: 'What is the title of the role?'
+                },
+                {
+                    name: 'salary',
+                    type: 'input',
+                    message: 'What is the salary of the role?',
+                    validate: value => !isNaN(value)
+                },
+                {
+                    name: 'department',
+                    type: 'list',
+                    choices: departments.map(department => department.name),
+                    message: 'Which department does this role belong to?'
+                }
+            ]).then(answers => {
+                let selectedDepartment = departments.find(dept => dept.name === answers.department);
+                connection.query('INSERT INTO role SET ?', {
+                    title: answers.title,
+                    salary: answers.salary,
+                    department_id: selectedDepartment.id
+                }, (err, res) => {
+                    if (err) throw err;
+                    console.log(`Role added: ${answers.title}`);
+                    start();
+                });
+            });
+        });
+    }
+    
 
 function addEmployee() {
     // This requires fetching roles and possibly managers first. Implement accordingly.
