@@ -22,7 +22,8 @@ Once required packages have been installed, from the command line execute "app.s
 https://drive.google.com/file/d/1ON_S4jlgZ_Rt9_GZLpn-zsYKGTBNBd_B/view?usp=drive_link
 
 ## Sample Screenshot
-[Sample Screenshot](screenshot.png)
+![Alt text](screenshot.png)
+
 
 
 ## License
