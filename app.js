@@ -2,6 +2,14 @@ const inquirer = require('inquirer');
 const connection = require('./db');
 
 function start() {
+
+    console.log("");
+    console.log("");
+    console.log("======================================");
+    console.log("          Employee Tracker            ");
+    console.log("======================================");
+    console.log("");
+
     inquirer.prompt({
         name: 'action',
         type: 'list',
