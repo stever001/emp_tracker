@@ -1,7 +1,7 @@
 # Employee Tracker
 
 ## Description
-A command line application designed to track employees Information, sucn as department, role, saleary, manager, etc.
+A command line application designed to track employees Information, sucn as department, role, salary, manager, etc. The application uses a MySQL database to store the information.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -15,7 +15,14 @@ A command line application designed to track employees Information, sucn as depa
 Requires installation of SQL2 and Inquirer.
 
 ## Usage
-Once reuired packages have been installed, from the command line execute "app.sql". Follow the user prompts to complete tasks, such as viewing departments, employees, and roles, and making changes or adding information to the underlying MySQL database.
+Once required packages have been installed, from the command line execute "app.sql". Follow the user prompts to complete tasks, such as viewing departments, employees, and roles, and making changes or adding information to the underlying MySQL database.
+
+
+## Link to Example Movie
+https://drive.google.com/file/d/1ON_S4jlgZ_Rt9_GZLpn-zsYKGTBNBd_B/view?usp=drive_link
+
+## Sample Screenshot
+
 
 ## License
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -23,6 +30,7 @@ Once reuired packages have been installed, from the command line execute "app.sq
 This project is licensed under the MIT license.
 
 ## Contributing
+n/a
 
 
 ## Tests
